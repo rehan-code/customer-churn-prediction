@@ -33,3 +33,19 @@ features = features.dropna()
 # one hot encoding (convert text fields to values)
 features = pd.get_dummies(features, columns=["Geography", "Gender"])
 
+# split training  and test data
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
+X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.2, random_state=42)
+
+scaler = StandardScaler()
+
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.fit_transform(X_test)
+
+# training the models
+#  logistic regression model
+from sklearn.linear_model import LogisticRegression
+lr_model = LogisticRegression(random_state=42)
+lr_model.fit(X_train, y_train)
