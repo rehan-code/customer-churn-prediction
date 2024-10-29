@@ -47,5 +47,9 @@ X_test = scaler.fit_transform(X_test)
 # training the models
 #  logistic regression model
 from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 lr_model = LogisticRegression(random_state=42)
 lr_model.fit(X_train, y_train)
+
+lr_predictions = lr_model.predict(X_test)
+lr_accuracy = accuracy_score(y_test, lr_predictions)
