@@ -94,3 +94,37 @@ evaluate_and_save_model(knn_model, X_train, X_test, y_train, y_test, "knn_model.
 
 svm_model = SVC(random_state=42)
 evaluate_and_save_model(svm_model, X_train, X_test, y_train, y_test, "svm_model.pkl")
+
+# create chart to rank best models
+feature_importances = xgb_model.feature_importances_
+feature_names = features.columns
+
+features_importances_df = pd.DataFrame({
+   'feature': feature_names,
+   'importance': feature_importances
+})
+
+features_importances_df = features_importances_df.sort_values('importance', ascending=False)
+
+plt.fig(figsize=(10,6))
+plt.bar(features_importances_df['feature'], features_importances_df['importance'])
+plt.xticks(rotation=90)
+plt.xlabel("Features")
+plt.ylabel("importance")
+plt.tight_layout()
+plt.show()
+
+
+# 
+features['CLV'] = df['Balance'] * df['EstimatedSalary'] * 100000
+features['AgeGroup'] = pd.cut(df['Age'], bins=[0, 30, 45, 60, 100], labels=['Younge', 'MiddleAge', 'Senior', 'Elderly'])
+features['TenureAgeRatio'] = df['Tenure'] / df['Age']
+
+features = pd.get_dummies(features, drop_first=True)
+X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.2, random_state=42)
+
+xgboost_model = xgb_model(random_state=42)
+
+evaluate_and_save_model(xgboost_model, X_train, X_test, y_train, y_test, "xgboost-featuresEngineered.pkl")
+
+# smote technique
