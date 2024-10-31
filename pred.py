@@ -128,3 +128,17 @@ xgboost_model = xgb_model(random_state=42)
 evaluate_and_save_model(xgboost_model, X_train, X_test, y_train, y_test, "xgboost-featuresEngineered.pkl")
 
 # smote technique
+from imblearn.over_sampling import SMOTE
+smote = SMOTE(random_state=42)
+x_resampled, y_resampled = smote.fit_resample(X_train, y_train)
+evaluate_and_save_model(xgboost_model, x_resampled, X_test, y_resampled, y_test, "xgboost-SMOTE.pkl")
+
+# Ensembling
+from sklearn.ensemble import VotingClassifier
+
+voting_clf = VotingClassifier(
+   estimators=[('xgboost', xgb.XGBClassifier(random_state=42)), ('rf', RandomForestClassifier(random_state=42)), ('svm', SVC(random_state=42, probability=True))],
+   voting='hard'
+)
+
+evaluate_and_save_model(voting_clf, x_resampled, X_test, y_resampled, y_test, 'voting_clf.pkl')
