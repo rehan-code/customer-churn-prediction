@@ -24,7 +24,7 @@ random_forest_model = load_model('rf_model.pkl')
 decision_tree_model = load_model('dt_model.pkl')
 svm_model = load_model('svm_model.pkl')
 knn_model = load_model('knn_model.pkl')
-voting_classifier_model = load_model('voting_clf_model.pkl')
+voting_classifier_model = load_model('voting_clf.pkl')
 xgboost_SMOTE_model = load_model('xgboost-SMOTE.pkl')
 xgboost_featureEngineered_model = load_model('xgboost-featureEngineered.pkl')
 
@@ -34,20 +34,18 @@ def prepare_input(credit_score, location, gender, age, tenure, balance,
                   estimated_salary):
     input_dict = {
         'CreditScore': credit_score,
-        'Location': location,
-        'Gender': gender,
         'Age': age,
         'Tenure': tenure,
         'Balance': balance,
         'NumOfProducts': num_products,
-        'hasCrCard': has_credit_card,
+        'HasCrCard': has_credit_card,
         'IsActiveMember': is_active_member,
         'EstimatedSalary': estimated_salary,
         'Geography_France': 1 if location == 'France' else 0,
         'Geography_Germany': 1 if location == 'Germany' else 0,
         'Geography_Spain': 1 if location == 'Spain' else 0,
         'Gender_Male': 1 if gender == 'Male' else 0,
-        'Genre_Female': 1 if gender == 'Female' else 0,
+        'Gender_Female': 1 if gender == 'Female' else 0,
     }
 
     input_df = pd.DataFrame([input_dict])
@@ -185,7 +183,7 @@ if selected_customer_option:
 
         credit_score = st.number_input("Credit Score",
                                        min_value=300,
-                                       max_value=350,
+                                       max_value=850,
                                        value=int(
                                            selected_customer['CreditScore']))
 
@@ -209,8 +207,7 @@ if selected_customer_option:
 
     with col2:
         balance = st.number_input('Balance',
-                                  min_value=1,
-                                  max_value=10,
+                                  min_value=0.0,
                                   value=float(selected_customer['Balance']))
 
         num_products = st.number_input("Number of Products",

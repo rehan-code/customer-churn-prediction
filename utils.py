@@ -12,7 +12,7 @@ def create_gauge_chart(probability):
 
   # Create a gauge chart
   fig = go.Figure(
-      go.Indicator(mode="guage+number",
+      go.Indicator(mode="gauge+number",
                    value=probability * 100,
                    domain={
                        'x': [0, 1],
@@ -29,7 +29,7 @@ def create_gauge_chart(probability):
                        'size': 24,
                        'color': "white"
                    }},
-                   guage={
+                   gauge={
                        'axis': {
                            'range': [0, 100],
                            'tickwidth': 1,
@@ -86,7 +86,7 @@ def create_model_probability_chart(probabilities):
              textposition='auto')
   ])
 
-  fig.update.layout(title='Churn Probability by Model',
+  fig.update_layout(title='Churn Probability by Model',
                     yaxis_title='Model',
                     xaxis_title='Probability',
                     xaxis=dict(tickformat='.0%', range=[0, 1]),
