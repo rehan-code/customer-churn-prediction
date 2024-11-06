@@ -113,7 +113,7 @@ def explain_prediction(probability, input_dict, surname):
   {df[df['Exited'] == 1].describe()}
 
 
-  - If the customer has over a 405 risk of churning, generate a 3 sentence explanation of why they might not be at risk of churning.
+  - If the customer has over a 405 risk of churning, generate a 3 sentence text explanation of why they might not be at risk of churning.
   - Your explanation should be based on the customer's information, the summary statistics of churned and non-churned customers, and the feature importance provided.
   - Explanation should be in markdown format.
   - Do not show tables.
